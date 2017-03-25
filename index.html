@@ -1,0 +1,48 @@
+<html>
+<head>
+<title></title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- css -->
+<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" media="all" />
+<link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
+</head>
+<style>
+div#map,
+#map div {
+	overflow: visible;
+}
+#map,
+#map {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+@media print {
+    #map,
+    #map {
+      	height: 500px;
+    }
+}
+#panel {
+    position: absolute;
+    top: 5px;
+    left: 50%;
+    margin-left: -180px;
+    z-index: 5;
+    background-color: #fff;
+    padding: 5px;
+    border: 1px solid #999;
+}
+</style>
+<body>
+	<div id = 'container'>
+		<div id="map"></div>
+	</div>
+</body>
+<footer>
+<!-- js -->
+<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/map.js"></script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCDBZ1o5JB_0X8CuPSwAtJ6fhwJL2ycwnE&callback=myMap"></script>
+</footer>
+</html>
