@@ -37,8 +37,8 @@ function showError(error) {
 function initMap(inilat, inilng) {
     // Create a map object and specify the DOM element for display.
     var map = new google.maps.Map(document.getElementById('map'), {
-        center: {lat: inilat, lng: inilng},
-        scrollwheel: false,
-        zoom: 8
+        center: new google.maps.LatLng(inilat, inilng),
+        zoom: 8,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
     });
 }
