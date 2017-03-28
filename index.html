@@ -7,9 +7,10 @@
 <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
 </head>
 <style>
+<style>
 div#map,
 #map div {
-	overflow: visible;
+    overflow: visible;
 }
 #map,
 #map {
@@ -19,22 +20,12 @@ div#map,
 @media print {
     #map,
     #map {
-      	height: 500px;
+        height: 500px;
     }
-}
-#panel {
-    position: absolute;
-    top: 5px;
-    left: 50%;
-    margin-left: -180px;
-    z-index: 5;
-    background-color: #fff;
-    padding: 5px;
-    border: 1px solid #999;
 }
 </style>
 <body>
-	<div id = 'container'>
+	<div id="container">
 		<div id="map"></div>
 	</div>
 </body>
@@ -43,6 +34,14 @@ div#map,
 <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/map.js"></script>
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCDBZ1o5JB_0X8CuPSwAtJ6fhwJL2ycwnE&callback=myMap"></script>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCA1qkdlRHYxRZvbCtv0fbzyTXUNuomkyo&callback=myMap"></script>
+<script type="text/javascript">
+$(function() {
+    var w_height = screen.height;
+    var height = w_height;
+    $("#map").height(height+"px");
+});
+</script>
 </footer>
 </html>
