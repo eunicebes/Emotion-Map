@@ -1,3 +1,42 @@
+@import url('https://fonts.googleapis.com/css?family=Pangolin|Poiret+One');
 body{
-	
+	background-color: #F5F5F5;
+}
+#main-container{
+	width: 50%;
+	height: 600px;
+	margin: 40 auto;
+	background-color: #ffffff;
+}
+#title{
+	font-size: 70px;
+	text-align: center;
+	font-family: 'Poiret One', cursive;
+	padding-top: 40px;
+}
+.division{
+	width: 80%;
+	margin-top: 30px;
+}
+#fb_button{
+	width: 180px;
+	background-color: #88BF9F;
+	border-radius: 3px;
+	margin: 0 auto;
+	text-align: center;
+	font-family: 'Pangolin', cursive;
+}
+#fb_button a{
+	color: #ffffff;
+	text-decoration: none;
+	font-size: 30px;
+	padding-left: 40px;
+	padding-right: 40px;
+}
+
+@media (max-width: 874px){
+	#main-container{
+		width: 80%;
+  		margin: 10 auto;
+	}
 }
