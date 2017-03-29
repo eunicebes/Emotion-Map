@@ -2,11 +2,11 @@
 <head>
 <title></title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- css -->
 <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" media="all" />
 <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
 </head>
-<style>
 <style>
 div#map,
 #map div {
@@ -14,8 +14,7 @@ div#map,
 }
 #map,
 #map {
-    margin-left: 10px;
-    margin-right: 10px;
+    
 }
 @media print {
     #map,
@@ -26,7 +25,12 @@ div#map,
 </style>
 <body>
 	<div id="container">
-		<div id="map"></div>
+        <div id="main-container">
+            <div id="title">emo.Map</div>
+            <hr class="division"/>
+            <div id="fb_button"><a href="">START</a></div>
+        </div>
+		
 	</div>
 </body>
 <footer>
@@ -35,12 +39,14 @@ div#map,
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/map.js"></script>
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCA1qkdlRHYxRZvbCtv0fbzyTXUNuomkyo&callback=myMap"></script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBDnA_qBmn9I8CGJmQ9m2ZWqP-wy3PI9KY&callback=myMap"></script>
+<script type="text/javascript" src="js/login.js"></script>
 <script type="text/javascript">
 $(function() {
     var w_height = screen.height;
     var height = w_height;
     $("#map").height(height+"px");
+
 });
 </script>
 </footer>
