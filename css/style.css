@@ -12,19 +12,31 @@ body{
 	font-size: 70px;
 	text-align: center;
 	font-family: 'Poiret One', cursive;
-	padding-top: 40px;
+	padding-top: 30px;
 }
 .division{
 	width: 80%;
-	margin-top: 30px;
+	margin-top: 20px;
+	margin-bottom: 30px;
+}
+.info_img{
+	margin-bottom: 50px;
+}
+.info_img img{
+	width: 75%;
+	display: block; 
+	margin: auto;
 }
 #fb_button{
 	width: 180px;
 	background-color: #88BF9F;
-	border-radius: 3px;
+	border-radius: 2px;
 	margin: 0 auto;
 	text-align: center;
 	font-family: 'Pangolin', cursive;
+	-webkit-box-shadow: 3px 3px #d0d0d0;
+	-moz-box-shadow: 3px 3px #d0d0d0;
+	box-shadow: 3px 3px #d0d0d0;
 }
 #fb_button a{
 	color: #ffffff;
@@ -33,10 +45,22 @@ body{
 	padding-left: 40px;
 	padding-right: 40px;
 }
-
+#fb_button a:hover{
+	position: relative;
+	top: 1px;
+	left: 2px;
+}
 @media (max-width: 874px){
 	#main-container{
 		width: 80%;
   		margin: 10 auto;
+	}
+}
+@media (max-width: 400px){
+	#main-container{
+		height: 410px;
+	}
+	#title{
+		font-size: 50px;
 	}
 }
