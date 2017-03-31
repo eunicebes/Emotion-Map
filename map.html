@@ -6,3 +6,43 @@
 <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" media="all" />
 <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
 </head>
+<style>
+div#map,
+#map div {
+    overflow: visible;
+}
+#map,
+#map {
+    
+}
+@media print {
+    #map,
+    #map {
+        height: 500px;
+    }
+}
+</style>
+<body>
+	<div id="container">
+        <div id="map"></div>
+        
+	</div>
+</body>
+<footer>
+<!-- js -->
+<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/map.js"></script>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBDnA_qBmn9I8CGJmQ9m2ZWqP-wy3PI9KY&callback=myMap"></script>
+<script type="text/javascript" src="js/login.js"></script>
+<script type="text/javascript">
+$(function() {
+    var w_height = screen.height;
+    var height = w_height;
+    $("#map").height(height+"px");
+
+});
+</script>
+</footer>
+</html>
