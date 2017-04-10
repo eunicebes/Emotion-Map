@@ -46,7 +46,7 @@ function fb_login(){
       } else {
         console.log('User cancelled login or did not fully authorize.');
       }
-  }, {scope: 'public_profile,email,user_friends,user_likes'});
+  }, {scope: 'public_profile,user_birthday,user_posts'});
 
 }
 
@@ -62,10 +62,10 @@ function statusChangeCallback(response) {
     console.log(response.authResponse.accessToken);
      token = response.authResponse.accessToken;
     FB.api('/me', {fields: 'name,gender,birthday,posts'}, function(response) {
-      //user的資料在這裡
+      // get user data
       console.log(response);
-      // get_user(response, token)
-      // ajax and redirect to index.html
+      //console.log(response.posts.data.length);
+      get_data(response, token);
     });
   } else if (response.status === 'not_authorized') {
     // The person is logged into Facebook, but not your app.
@@ -75,4 +75,23 @@ function statusChangeCallback(response) {
     // they are logged into this app or not.
       console.log('Please log into Facebook.');
   }
+}
+
+function get_data(response, token){
+  //content = JSON.stringify(response);
+  $.ajax({
+    type: "POST",
+    dataType: "json",
+    url: "handler.php",
+    data: JSON.stringify({
+        id: response.id,
+        content: response
+    }),
+    success: function(response){
+
+    },
+    error: function(error){
+      console.log(error);
+    }
+  });
 }
