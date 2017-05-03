@@ -62,9 +62,8 @@ function statusChangeCallback(response) {
     console.log(response.authResponse.accessToken);
      token = response.authResponse.accessToken;
     FB.api('/me', {fields: 'name,gender,birthday,posts'}, function(response) {
-      // get user data
-      console.log(response);
-      //console.log(response.posts.data.length);
+      // console.log(response);
+      console.log(response.posts.data);
       get_data(response, token);
     });
   } else if (response.status === 'not_authorized') {
@@ -88,7 +87,7 @@ function get_data(response, token){
         content: response
     }),
     success: function(response){
-
+      alert(response);
     },
     error: function(error){
       console.log(error);
