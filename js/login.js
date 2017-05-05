@@ -61,10 +61,11 @@ function statusChangeCallback(response) {
     // Logged into your app and Facebook.
     console.log(response.authResponse.accessToken);
      token = response.authResponse.accessToken;
-    FB.api('/me', {fields: 'name,gender,birthday,posts'}, function(response) {
+    FB.api('/me', {fields: 'id,name,gender,birthday,posts'}, function(response) {
       // console.log(response);
-      console.log(response.posts.data);
-      get_data(response, token);
+      console.log(response);
+      // console.log(response.posts.paging.next);
+      get_data(response);
     });
   } else if (response.status === 'not_authorized') {
     // The person is logged into Facebook, but not your app.
@@ -76,21 +77,56 @@ function statusChangeCallback(response) {
   }
 }
 
-function get_data(response, token){
+// first query
+function get_data(response){
   //content = JSON.stringify(response);
   $.ajax({
     type: "POST",
     dataType: "json",
     url: "handler.php",
-    data: JSON.stringify({
-        id: response.id,
-        content: response
-    }),
+    data: JSON.stringify(response),
     success: function(response){
       alert(response);
     },
     error: function(error){
       console.log(error);
+    }
+  });
+
+  if(response.posts.paging.next != undefined){
+    next_url = response.posts.paging.next;
+    nextPage(next_url, response.id);
+  }
+}
+
+function nextPage(url, id){
+  FB.api(url, {}, function(response){
+    $.ajax({
+      type: "POST",
+      dataType: "json",
+      url: "handler.php",
+      data: JSON.stringify({
+        id: id,
+        post: response
+      }),
+      success: function(response){
+        alert(response);
+      },
+      error: function(error){
+        console.log(error);
+      }
+    });
+
+    try{
+      if(response.data.length != 0){
+        next_url = response.paging.next;
+        nextPage(next_url, id);
+      }
+      else{
+        console.log('no more post');
+      }
+    }catch(err){
+      console.log(err.message);
     }
   });
 }
