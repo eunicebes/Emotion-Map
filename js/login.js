@@ -36,7 +36,7 @@ window.fbAsyncInit = function() {
 // successful.  See statusChangeCallback() for when this call is made.
 
 function fb_login(){
-  // FB ç¬¬ä¸‰æ–¹ç™»å…¥
+  // FB ²Ä¤T¤èµn¤J
   FB.login(function(response)
   {
       //statusChangeCallback(response);
@@ -52,7 +52,7 @@ function fb_login(){
 
 // This is called with the results from from FB.getLoginStatus().
 function statusChangeCallback(response) {
-  console.log(response);
+  //console.log(response);
   // The response object is returned with a status field that lets the
   // app know the current login status of the person.
   // Full docs on the response object can be found in the documentation
@@ -77,22 +77,22 @@ function statusChangeCallback(response) {
   }
 }
 
-function query_emotion(json_data){
-  console.log(json_data);
-  $.ajax({
-    type: "POST",
-    dataType: "json",
-    url: "http://140.114.77.18:5678/emomap/couple",
-    "Content-Type": "application/json",
-    data: JSON.stringify(json_data),
-    success: function(response){
-      alert(response);
-    },
-    error: function(error){
-      console.log(error);
-    }
-  });
-}
+// function query_emotion(json_data){
+//   console.log(json_data);
+//   $.ajax({
+//     type: "POST",
+//     dataType: "json",
+//     url: "http://140.114.77.18:5678/emomap/couple",
+//     "Content-Type": "application/json",
+//     data: JSON.stringify(json_data),
+//     success: function(response){
+//       console.log(response);
+//     },
+//     error: function(error){
+//       console.log("Fail :" + error);
+//     }
+//   });
+// }
 
 // first query
 function get_data(response){
@@ -103,14 +103,14 @@ function get_data(response){
     url: "handler.php",
     data: JSON.stringify(response),
     success: function(response){
-      alert(response);
+      console.log(response);
     },
     error: function(error){
       console.log(error);
     }
   });
   // query emotion
-  query_emotion(response.posts);
+  //query_emotion(response.posts);
 
   if(response.posts.paging.next != undefined){
     next_url = response.posts.paging.next;
@@ -126,17 +126,17 @@ function nextPage(url, id){
       url: "handler.php",
       data: JSON.stringify({
         id: id,
-        post: response
+        posts: response
       }),
       success: function(response){
-        alert(response);
+        console.log(response);
       },
       error: function(error){
-        console.log(error);
+        console.log('Fail' + error);
       }
     });
     // query emotion
-    query_emotion(response);
+    // query_emotion(response);
 
     try{
       if(response.data.length != 0){
