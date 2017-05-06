@@ -77,6 +77,23 @@ function statusChangeCallback(response) {
   }
 }
 
+function query_emotion(json_data){
+  console.log(json_data);
+  $.ajax({
+    type: "POST",
+    dataType: "json",
+    url: "http://140.114.77.18:5678/emomap/couple",
+    "Content-Type": "application/json",
+    data: JSON.stringify(json_data),
+    success: function(response){
+      alert(response);
+    },
+    error: function(error){
+      console.log(error);
+    }
+  });
+}
+
 // first query
 function get_data(response){
   //content = JSON.stringify(response);
@@ -92,6 +109,8 @@ function get_data(response){
       console.log(error);
     }
   });
+  // query emotion
+  query_emotion(response.posts);
 
   if(response.posts.paging.next != undefined){
     next_url = response.posts.paging.next;
@@ -116,6 +135,8 @@ function nextPage(url, id){
         console.log(error);
       }
     });
+    // query emotion
+    query_emotion(response);
 
     try{
       if(response.data.length != 0){
