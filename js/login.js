@@ -46,7 +46,7 @@ function fb_login(){
       } else {
         console.log('User cancelled login or did not fully authorize.');
       }
-  }, {scope: 'public_profile,user_birthday,user_posts'});
+  }, {scope: 'public_profile, user_birthday, user_posts'});
 
 }
 
@@ -77,40 +77,22 @@ function statusChangeCallback(response) {
   }
 }
 
-// function query_emotion(json_data){
-//   console.log(json_data);
-//   $.ajax({
-//     type: "POST",
-//     dataType: "json",
-//     url: "http://140.114.77.18:5678/emomap/couple",
-//     "Content-Type": "application/json",
-//     data: JSON.stringify(json_data),
-//     success: function(response){
-//       console.log(response);
-//     },
-//     error: function(error){
-//       console.log("Fail :" + error);
-//     }
-//   });
-// }
-
 // first query
 function get_data(response){
   //content = JSON.stringify(response);
   $.ajax({
     type: "POST",
-    dataType: "json",
+    // dataType: "json",
     url: "handler.php",
     data: JSON.stringify(response),
     success: function(response){
-      console.log(response);
+      response = JSON.parse(response);
+    console.log(response.data[0]);
     },
     error: function(error){
       console.log(error);
     }
   });
-  // query emotion
-  //query_emotion(response.posts);
 
   if(response.posts.paging.next != undefined){
     next_url = response.posts.paging.next;
@@ -122,21 +104,20 @@ function nextPage(url, id){
   FB.api(url, {}, function(response){
     $.ajax({
       type: "POST",
-      dataType: "json",
+      //dataType: "json",
       url: "handler.php",
       data: JSON.stringify({
         id: id,
         posts: response
       }),
       success: function(response){
-        console.log(response);
+        response = JSON.parse(response);
+      console.log(response.data[0]);
       },
       error: function(error){
         console.log('Fail' + error);
       }
     });
-    // query emotion
-    // query_emotion(response);
 
     try{
       if(response.data.length != 0){
