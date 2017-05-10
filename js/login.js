@@ -62,10 +62,13 @@ function statusChangeCallback(response) {
     console.log(response.authResponse.accessToken);
     token = response.authResponse.accessToken;
     FB.api('/me', {fields: 'id,name,gender,birthday,posts'}, function(response) {
-      // console.log(response);
-      console.log(response);
       // console.log(response.posts.paging.next);
-      get_data(response);
+      console.log(response);
+      var link = window.location.href;
+      // Check current url
+      if(link == 'https://idea.cs.nthu.edu.tw/~eunice/emotion_Map/map.html'){
+        get_data(response);
+      }
     });
   } else if (response.status === 'not_authorized') {
     // The person is logged into Facebook, but not your app.
@@ -115,7 +118,9 @@ function nextPage(url, id){
       success: function(response){
         response = JSON.parse(response);
         //console.log(response.data[0]);
-        posts_ary = posts_ary.concat(response.data)
+        // posts_ary = posts_ary.concat(response.data)
+        posts_ary = response.data;
+        catchData(posts_ary);
       },
       error: function(error){
         console.log('Fail' + error);
@@ -129,8 +134,8 @@ function nextPage(url, id){
       }
       else{
         console.log('no more post');
-        console.log(posts_ary);
-        catchData(posts_ary);
+
+        // function in map.js, send data to another js file
       }
     }catch(err){
       console.log(err.message);

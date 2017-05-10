@@ -37,15 +37,19 @@ function showError(error) {
     //showmap(inilat, inilng);
 }
 function catchData(data){
-    var longtitude;
-    var latitude;
+    var longlat, emotion, msg;
+    var info = new Array();
     for (var item in data){
-        var loca = data[item].location;
-        if(loca != 'NA'){
-            alert(loca);
-            codeAddress(loca, function(result){
-                longtitude = result.lng();
-                latitude = result.lat();
+        var position = data[item].location;
+        if(position != 'NA'){
+            // alert(position);
+            codeAddress(position, function(result){
+                longlat = result
+                emotion = data[item].emotion1
+                msg = data[item].message
+                info = [longlat, emotion, msg]
+
+                placeMarker(info);
             });
         }   
     }
@@ -58,6 +62,24 @@ function initMap(inilat, inilng) {
         mapTypeId: google.maps.MapTypeId.ROADMAP
     });
     geocoder = new google.maps.Geocoder();
+    // test();
+}
+function test(){
+    address = '十勝川鍋物';
+    geocoder.geocode({'address': address}, function(results, status){
+        if(status = 'OK'){
+            map.setCenter(results[0].geometry.location);
+            var marker = new google.maps.Marker({
+                map: map,
+                position: results[0].geometry.location
+            });
+            console.log(address);
+            //callback(results[0].geometry.location);
+        }else{
+            console.log('Geocode was not successful for the following reason: ' + status);
+            //callback(0);
+        }
+    });
 }
 function codeAddress(address, callback){
     geocoder.geocode({'address': address}, function(results, status){
@@ -67,7 +89,7 @@ function codeAddress(address, callback){
             //     map: map,
             //     position: results[0].geometry.location
             // });
-            
+            console.log(address);
             callback(results[0].geometry.location);
         }else{
             console.log('Geocode was not successful for the following reason: ' + status);
@@ -75,16 +97,12 @@ function codeAddress(address, callback){
         }
     });
 }
-function placeMarker(){
+function placeMarker(info){
     var marker = null;
-    var coordinate;
+    var coordinate, image;
+    coordinate = info[0]
     marker = new google.maps.Marker({
         position: coordinate,
         map: map
-    });
-
-    var infowindow = new google.maps.InfoWindow({
-        content: infocontent,
-        maxWidth: 300
     });
 }
