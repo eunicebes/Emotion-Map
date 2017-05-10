@@ -1,3 +1,5 @@
+var geocoder;
+var map;
 function myMap() {
     var inilat = 25.037;
     var inilng = 121.56693799999994;
@@ -34,11 +36,55 @@ function showError(error) {
     }
     //showmap(inilat, inilng);
 }
+function catchData(data){
+    var longtitude;
+    var latitude;
+    for (var item in data){
+        var loca = data[item].location;
+        if(loca != 'NA'){
+            alert(loca);
+            codeAddress(loca, function(result){
+                longtitude = result.lng();
+                latitude = result.lat();
+            });
+        }   
+    }
+}
 function initMap(inilat, inilng) {
     // Create a map object and specify the DOM element for display.
-    var map = new google.maps.Map(document.getElementById('map'), {
+    map = new google.maps.Map(document.getElementById('map'), {
         center: new google.maps.LatLng(inilat, inilng),
         zoom: 8,
         mapTypeId: google.maps.MapTypeId.ROADMAP
+    });
+    geocoder = new google.maps.Geocoder();
+}
+function codeAddress(address, callback){
+    geocoder.geocode({'address': address}, function(results, status){
+        if(status = 'OK'){
+            // map.setCenter(results[0].geometry.location);
+            // var marker = new google.maps.Marker({
+            //     map: map,
+            //     position: results[0].geometry.location
+            // });
+            
+            callback(results[0].geometry.location);
+        }else{
+            console.log('Geocode was not successful for the following reason: ' + status);
+            callback(0);
+        }
+    });
+}
+function placeMarker(){
+    var marker = null;
+    var coordinate;
+    marker = new google.maps.Marker({
+        position: coordinate,
+        map: map
+    });
+
+    var infowindow = new google.maps.InfoWindow({
+        content: infocontent,
+        maxWidth: 300
     });
 }

@@ -36,13 +36,13 @@ window.fbAsyncInit = function() {
 // successful.  See statusChangeCallback() for when this call is made.
 
 function fb_login(){
-  // FB 第三方登入
+  // FB ?臚T???J
   FB.login(function(response)
   {
       //statusChangeCallback(response);
       if (response.authResponse) {
         console.log('Welcome!  Fetching your information.... ');
-        location.reload();
+        window.location = 'https://idea.cs.nthu.edu.tw/~eunice/emotion_Map/map.html';
       } else {
         console.log('User cancelled login or did not fully authorize.');
       }
@@ -60,7 +60,7 @@ function statusChangeCallback(response) {
   if (response.status === 'connected') {
     // Logged into your app and Facebook.
     console.log(response.authResponse.accessToken);
-     token = response.authResponse.accessToken;
+    token = response.authResponse.accessToken;
     FB.api('/me', {fields: 'id,name,gender,birthday,posts'}, function(response) {
       // console.log(response);
       console.log(response);
@@ -77,7 +77,7 @@ function statusChangeCallback(response) {
   }
 }
 
-// first query
+// get first page data
 function get_data(response){
   //content = JSON.stringify(response);
   $.ajax({
@@ -100,6 +100,8 @@ function get_data(response){
   }
 }
 
+var posts_ary = new Array();
+// get remain posts
 function nextPage(url, id){
   FB.api(url, {}, function(response){
     $.ajax({
@@ -112,7 +114,8 @@ function nextPage(url, id){
       }),
       success: function(response){
         response = JSON.parse(response);
-      console.log(response.data[0]);
+        //console.log(response.data[0]);
+        posts_ary = posts_ary.concat(response.data)
       },
       error: function(error){
         console.log('Fail' + error);
@@ -126,6 +129,8 @@ function nextPage(url, id){
       }
       else{
         console.log('no more post');
+        console.log(posts_ary);
+        catchData(posts_ary);
       }
     }catch(err){
       console.log(err.message);

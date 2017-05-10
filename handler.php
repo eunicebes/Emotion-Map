@@ -6,11 +6,7 @@
     $id = $obj->{'id'};
     $posts = $obj->{'posts'};
     // echo json_encode($posts);
-    // // $filename = $id.' '.date('Y-m-d H:i');
-    // // $myfile = fopen('json/'.$filename, "a") or die("Unable to open file!");
     
-    // // fwrite($myfile, $response."\n");
-    // // fclose($myfile);
  
     $query_string = json_encode($posts);
     $ch = curl_init('http://140.114.77.18:5678/emomap/couple');                                                                      
