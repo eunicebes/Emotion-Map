@@ -39,21 +39,19 @@ function showError(error) {
 function catchData(data){
     var longlat, emotion, msg;
     var info = new Array();
-    for (var item in data){
-        var position = data[item].location;
-        // console.log(position);
-        if(position != 'NA'){
-            // alert(position);
-            codeAddress(position, function(result){
-                longlat = result
-                emotion = data[item].emotion1
-                msg = data[item].message
-                info = [longlat, emotion, msg]
+    var position = data.location;
+    // console.log(position);
+    if(position != 'NA'){
+        // alert(position);
+        codeAddress(position, function(result){
+            longlat = result
+            emotion = data.emotion1
+            msg = data.message
+            info = [longlat, emotion, msg]
 
-                placeMarker(info);
-            });
-        }   
-    }
+            placeMarker(info);
+        });
+    }   
 }
 function initMap(inilat, inilng) {
     // Create a map object and specify the DOM element for display.
@@ -101,7 +99,8 @@ function codeAddress(address, callback){
 function placeMarker(info){
     var marker = null;
     var coordinate, image;
-    coordinate = info[0]
+    coordinate = info[0];
+    emotion = info[1];
     marker = new google.maps.Marker({
         position: coordinate,
         map: map

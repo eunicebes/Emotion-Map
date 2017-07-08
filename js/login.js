@@ -89,9 +89,11 @@ function get_data(response){
     data: JSON.stringify(response),
     success: function(response){
       response = JSON.parse(response);
-      // console.log(response.data[0]);
-      posts_ary = response.data;
-      catchData(posts_ary);
+      // console.log(response.data.length);
+      for (var i=0; i < response.data.length; i++){
+        setTimeout(catchData.bind(this, response.data[i]), 1000);
+      }
+      //catchData(posts_ary);
     },
     error: function(error){
       console.log(error);
@@ -118,10 +120,9 @@ function nextPage(url, id){
       }),
       success: function(response){
         response = JSON.parse(response);
-        // console.log(response.data[0]);
-        // posts_ary = posts_ary.concat(response.data)
-        posts_ary = response.data;
-        catchData(posts_ary);
+        for (var i=0; i < response.data.length; i++){
+          setTimeout(catchData.bind(this, response.data[i]), 1000);
+        }
       },
       error: function(error){
         console.log('Fail' + error);
