@@ -82,7 +82,6 @@ function statusChangeCallback(response) {
 
 // get first page data
 function get_data(response){
-  //content = JSON.stringify(response);
   $.ajax({
     type: "POST",
     // dataType: "json",
@@ -90,7 +89,9 @@ function get_data(response){
     data: JSON.stringify(response),
     success: function(response){
       response = JSON.parse(response);
-    console.log(response.data[0]);
+      // console.log(response.data[0]);
+      posts_ary = response.data;
+      catchData(posts_ary);
     },
     error: function(error){
       console.log(error);
@@ -117,7 +118,7 @@ function nextPage(url, id){
       }),
       success: function(response){
         response = JSON.parse(response);
-        //console.log(response.data[0]);
+        // console.log(response.data[0]);
         // posts_ary = posts_ary.concat(response.data)
         posts_ary = response.data;
         catchData(posts_ary);

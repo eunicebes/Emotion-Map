@@ -41,6 +41,7 @@ function catchData(data){
     var info = new Array();
     for (var item in data){
         var position = data[item].location;
+        // console.log(position);
         if(position != 'NA'){
             // alert(position);
             codeAddress(position, function(result){
@@ -65,7 +66,7 @@ function initMap(inilat, inilng) {
     // test();
 }
 function test(){
-    address = '十勝川鍋物';
+    address = '3dao shabu shabu';
     geocoder.geocode({'address': address}, function(results, status){
         if(status = 'OK'){
             map.setCenter(results[0].geometry.location);
@@ -83,17 +84,17 @@ function test(){
 }
 function codeAddress(address, callback){
     geocoder.geocode({'address': address}, function(results, status){
-        if(status = 'OK'){
+        if(status == 'OK' && status != 'ZERO_RESULTS'){
             // map.setCenter(results[0].geometry.location);
             // var marker = new google.maps.Marker({
             //     map: map,
             //     position: results[0].geometry.location
             // });
-            console.log(address);
+            // console.log(address);
             callback(results[0].geometry.location);
         }else{
             console.log('Geocode was not successful for the following reason: ' + status);
-            callback(0);
+            //callback(0);
         }
     });
 }
