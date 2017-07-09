@@ -59,7 +59,7 @@ function catchData(data){
     // }
 }
 function myLoop(data, upperbound){
-    if (upperbound < 0) return;
+    if (upperbound < 1) return;
     // console.log(upperbound);
     // console.log(data[upperbound]);
     var longlat, emotion, msg;
@@ -68,6 +68,7 @@ function myLoop(data, upperbound){
         var position = data[upperbound].location;
         if(position != 'NA'){
             codeAddress(position, function(result){
+                console.log(upperbound);
                 longlat = result;
                 emotion = data[upperbound].emotion1;
                 msg = data[upperbound].message;
@@ -77,7 +78,7 @@ function myLoop(data, upperbound){
             });
         }
         myLoop(data, --upperbound);
-    }, 500);
+    }, 1000);
 
 }
 function initMap(inilat, inilng) {
