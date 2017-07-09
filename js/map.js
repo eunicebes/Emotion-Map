@@ -37,50 +37,27 @@ function showError(error) {
     //showmap(inilat, inilng);
 }
 function catchData(data){
-    // console.log(data.length);
-    var upperbound = data.length - 1;
-    myLoop(data, upperbound);
-    // var longlat, emotion, msg;
-    // var info = new Array();
-    // for (var item in data){
-    //     var position = data[item].location;
-    //     // console.log(position);
-    //     if(position != 'NA'){
-    //         // alert(position);
-    //         codeAddress(position, function(result){
-    //             longlat = result
-    //             emotion = data[item].emotion1
-    //             msg = data[item].message
-    //             info = [longlat, emotion, msg]
-
-    //             placeMarker(info);
-    //         });
-    //     }   
-    // }
-}
-function myLoop(data, upperbound){
-    if (upperbound < 1) return;
-    // console.log(upperbound);
-    // console.log(data[upperbound]);
-    var longlat, emotion, msg;
-    var info  = new Array();
-    setTimeout(function(){
-        var position = data[upperbound].location;
-        if(position != 'NA'){
-            codeAddress(position, function(result){
-                console.log(upperbound);
-                longlat = result;
-                emotion = data[upperbound].emotion1;
-                msg = data[upperbound].message;
-                info = [longlat, emotion, msg];
-
-                placeMarker(info);
-            });
+    var longitude, latitude, emotion, msg;
+    var info = new Array();
+    for (var item in data){
+        if (data[item].place != undefined){
+            //console.log(data[item].place);
+            try{
+                latitude = data[item].place.location.latitude;
+                longitude = data[item].place.location.longitude;
+                emotion = data[item].emotion1;
+                msg = data[item].message;
+                info = [latitude, longitude, emotion, msg];
+                // console.log(info);
+                placeMarker(info);   
+            }
+            catch(e){
+                console.error(e);
+            }
         }
-        myLoop(data, --upperbound);
-    }, 1000);
-
+    }
 }
+
 function initMap(inilat, inilng) {
     // Create a map object and specify the DOM element for display.
     map = new google.maps.Map(document.getElementById('map'), {
@@ -108,29 +85,73 @@ function test(){
         }
     });
 }
-function codeAddress(address, callback){
-    geocoder.geocode({'address': address}, function(results, status){
-        if(status == 'OK' && status != 'ZERO_RESULTS'){
-            // map.setCenter(results[0].geometry.location);
-            // var marker = new google.maps.Marker({
-            //     map: map,
-            //     position: results[0].geometry.location
-            // });
-            // console.log(address);
-            callback(results[0].geometry.location);
-        }else{
-            console.log('Geocode was not successful for the following reason: ' + status);
-            //callback(0);
-        }
-    });
-}
+// function codeAddress(address, callback){
+//     geocoder.geocode({'address': address}, function(results, status){
+//         if(status == 'OK' && status != 'ZERO_RESULTS'){
+//             // map.setCenter(results[0].geometry.location);
+//             // var marker = new google.maps.Marker({
+//             //     map: map,
+//             //     position: results[0].geometry.location
+//             // });
+//             // console.log(address);
+//             callback(results[0].geometry.location);
+//         }else{
+//             console.log('Geocode was not successful for the following reason: ' + status);
+//         }
+//     });
+// }
 function placeMarker(info){
     var marker = null;
-    var coordinate, image;
-    coordinate = info[0];
-    emotion = info[1];
+    var emotion, image;
+    var myLatlng = new google.maps.LatLng(info[0], info[1]);
+    emotion = info[2];
+    // console.log(emotion);
+    var icons = {
+        haha: {
+            image: {
+                url: './img/laughing.png',
+                scaledSize: new google.maps.Size(32, 32), // scaled size
+                origin: new google.maps.Point(0,0), // origin
+                anchor: new google.maps.Point(0, 0) // anchor
+            }
+        },
+        wow: {
+            image: {
+                url: './img/surprised.png',
+                scaledSize: new google.maps.Size(32, 32), // scaled size
+                origin: new google.maps.Point(0,0), // origin
+                anchor: new google.maps.Point(0, 0) // anchor
+            }
+        },
+        love: {
+            image: {
+                url: './img/heart.png',
+                scaledSize: new google.maps.Size(32, 32), // scaled size
+                origin: new google.maps.Point(0,0), // origin
+                anchor: new google.maps.Point(0, 0) // anchor
+            }
+        },
+        sad: {
+            image: {
+                url: './img/unhappy.png',
+                scaledSize: new google.maps.Size(32, 32), // scaled size
+                origin: new google.maps.Point(0,0), // origin
+                anchor: new google.maps.Point(0, 0) // anchor
+            }
+        },
+        angry: {
+            image: {
+                url: './img/angry.png',
+                scaledSize: new google.maps.Size(32, 32), // scaled size
+                origin: new google.maps.Point(0,0), // origin
+                anchor: new google.maps.Point(0, 0) // anchor
+            }
+        }
+    };
+
     marker = new google.maps.Marker({
-        position: coordinate,
-        map: map
+        position: myLatlng,
+        map: map,
+        icon: icons[emotion].image
     });
 }

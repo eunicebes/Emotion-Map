@@ -61,7 +61,7 @@ function statusChangeCallback(response) {
     // Logged into your app and Facebook.
     console.log(response.authResponse.accessToken);
     token = response.authResponse.accessToken;
-    FB.api('/me', {fields: 'id,name,gender,birthday,posts'}, function(response) {
+    FB.api('/me', {fields: 'id,name,gender,birthday,posts{message, story, created_time, id, place}'}, function(response) {
       // console.log(response.posts.paging.next);
       console.log(response);
       var link = window.location.href;
@@ -90,7 +90,7 @@ function get_data(response){
     data: JSON.stringify(response),
     success: function(response){
       response = JSON.parse(response);
-      // console.log(response.data[0]);
+      // console.log(response.data);
       posts_ary = response.data;
       catchData(posts_ary);
     },
