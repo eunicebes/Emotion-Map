@@ -37,21 +37,48 @@ function showError(error) {
     //showmap(inilat, inilng);
 }
 function catchData(data){
-    var longlat, emotion, msg;
-    var info = new Array();
-    var position = data.location;
-    // console.log(position);
-    if(position != 'NA'){
-        // alert(position);
-        codeAddress(position, function(result){
-            longlat = result
-            emotion = data.emotion1
-            msg = data.message
-            info = [longlat, emotion, msg]
+    // console.log(data.length);
+    var upperbound = data.length - 1;
+    myLoop(data, upperbound);
+    // var longlat, emotion, msg;
+    // var info = new Array();
+    // for (var item in data){
+    //     var position = data[item].location;
+    //     // console.log(position);
+    //     if(position != 'NA'){
+    //         // alert(position);
+    //         codeAddress(position, function(result){
+    //             longlat = result
+    //             emotion = data[item].emotion1
+    //             msg = data[item].message
+    //             info = [longlat, emotion, msg]
 
-            placeMarker(info);
-        });
-    }   
+    //             placeMarker(info);
+    //         });
+    //     }   
+    // }
+}
+function myLoop(data, upperbound){
+    if (upperbound < 0) return;
+    // console.log(upperbound);
+    // console.log(data[upperbound]);
+    var longlat, emotion, msg;
+    var info  = new Array();
+    setTimeout(function(){
+        var position = data[upperbound].location;
+        if(position != 'NA'){
+            codeAddress(position, function(result){
+                longlat = result;
+                emotion = data[upperbound].emotion1;
+                msg = data[upperbound].message;
+                info = [longlat, emotion, msg];
+
+                placeMarker(info);
+            });
+        }
+        myLoop(data, --upperbound);
+    }, 500);
+
 }
 function initMap(inilat, inilng) {
     // Create a map object and specify the DOM element for display.
