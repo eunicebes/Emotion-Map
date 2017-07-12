@@ -46,7 +46,7 @@ function fb_login(){
       } else {
         console.log('User cancelled login or did not fully authorize.');
       }
-  }, {scope: 'public_profile, user_birthday, user_posts'});
+  }, {scope: 'public_profile, user_posts'});
 
 }
 
@@ -61,7 +61,7 @@ function statusChangeCallback(response) {
     // Logged into your app and Facebook.
     console.log(response.authResponse.accessToken);
     token = response.authResponse.accessToken;
-    FB.api('/me', {fields: 'id,name,gender,birthday,posts{message, story, created_time, id, place}'}, function(response) {
+    FB.api('/me', {fields: 'id,name,gender,posts{message, story, created_time, id, place}'}, function(response) {
       // console.log(response.posts.paging.next);
       console.log(response);
       var link = window.location.href;

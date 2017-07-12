@@ -100,11 +100,13 @@ function test(){
 //         }
 //     });
 // }
+var infowindow;
 function placeMarker(info){
     var marker = null;
-    var emotion, image;
+    var emotion, image, contentString;
     var myLatlng = new google.maps.LatLng(info[0], info[1]);
     emotion = info[2];
+    contentString = info[3];
     // console.log(emotion);
     var icons = {
         haha: {
@@ -149,9 +151,21 @@ function placeMarker(info){
         }
     };
 
+    
+
     marker = new google.maps.Marker({
         position: myLatlng,
         map: map,
         icon: icons[emotion].image
+    });
+
+    marker.addListener('click', function() {
+        if(infowindow) infowindow.close();
+
+        infowindow = new google.maps.InfoWindow({
+            content: contentString
+        });
+        
+        infowindow.open(map, marker);
     });
 }
