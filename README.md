@@ -4,7 +4,7 @@ This application used Facebook API and Google Maps API to build the Facebook Med
 
 After login to Facebook, Emotion Map will try to load your media locations. With the Emotion Classifier built from Idea Lab, the emotion of the posts is extracted. When finishing the loading and emotion classifing procedure, the Facebook Emotion Map will show up with different emoticon that plot on different locations.
 
-Btw, click on the single photo, it will show the detail of this post.
+Also, it will show the detail of this post with simply click on the emoticon.
 
 
 For example: 
