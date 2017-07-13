@@ -50,6 +50,7 @@ function fb_login(){
 
 }
 
+var token
 // This is called with the results from from FB.getLoginStatus().
 function statusChangeCallback(response) {
   //console.log(response);
@@ -61,9 +62,9 @@ function statusChangeCallback(response) {
     // Logged into your app and Facebook.
     console.log(response.authResponse.accessToken);
     token = response.authResponse.accessToken;
-    FB.api('/me', {fields: 'id,name,gender,posts{message, story, created_time, id, place}'}, function(response) {
+    FB.api('/me', {fields: 'id,name,gender,posts{message, story, created_time, id, place, reactions, comments}'}, function(response) {
       // console.log(response.posts.paging.next);
-      console.log(response);
+      // console.log(response);
       var link = window.location.href;
       // Check current url
       if(link == 'https://idea.cs.nthu.edu.tw/~eunice/emotion_Map/map.html'){
@@ -81,6 +82,7 @@ function statusChangeCallback(response) {
 }
 
 var posts_ary = new Array();
+var user_reactions = new Array();
 // get first page data
 function get_data(response){
   $.ajax({
