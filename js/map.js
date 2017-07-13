@@ -159,13 +159,48 @@ function placeMarker(info){
         icon: icons[emotion].image
     });
 
+	var infocontent = '<div class="iw-container">'+
+        '<p style="margin-top:8px">' + contentString.replace("\n", "<br/>") + '</p>'+
+        '<p style="margin-top:20px;text-align:right;" id="correct-btn"><a href=\'javascript:show_correct()\'">情緒怪怪的？</a></p>'+
+        '<div id="correct-option" style="display:none;text-align:right;color: #ff6666;">'+
+        '<p style="margin-top:20px">這應該是' +
+        '<a href=\'javascript:tag(\"' + contentString + '\",\"laughing\")\'><img width="15px" height="15px" src="./img/laughing.png"/></a>'+
+        '<a href=\'javascript:tag(\"' + contentString + '\",\"surprised\")\'><img width="15px" height="15px" src="./img/surprised.png"/></a>'+
+        '<a href=\'javascript:tag(\"' + contentString + '\",\"heart\")\'><img width="15px" height="15px" src="./img/heart.png"/></a>'+
+        '<a href=\'javascript:tag(\"' + contentString + '\",\"unhappy\")\'><img width="15px" height="15px" src="./img/unhappy.png"/></a>'+
+        '<a href=\'javascript:tag(\"' + contentString + '\",\"angry\")\'><img width="15px" height="15px" src="./img/angry.png"/></a>才對！</p>'+
+        '</div>'+
+    '</div>';
+
     marker.addListener('click', function() {
         if(infowindow) infowindow.close();
 
         infowindow = new google.maps.InfoWindow({
-            content: contentString
+            // content: contentString
+            content: infocontent
         });
         
         infowindow.open(map, marker);
     });
+}
+
+function tag(text, emo){
+  console.log("Emo correction");  
+  $.ajax({
+    type: "POST",
+    url: "tag.php",
+    data: JSON.stringify({"text":text, "emo": emo}),
+    success: function(response){
+      console.log("echo : " + response);
+    },
+    error: function(error){
+      console.log(error);
+    }
+  });
+  $("#correct-option").css("display", "none");
+}
+
+function show_correct(){
+	$("#correct-option").css("display", "block");
+	$("#correct-btn").css("display", "none");
 }
