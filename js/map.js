@@ -101,6 +101,7 @@ function test(){
 //     });
 // }
 var infowindow;
+var marker_list  = new Array();
 function placeMarker(info){
     var marker = null;
     var emotion, image, contentString;
@@ -151,24 +152,44 @@ function placeMarker(info){
         }
     };
 
+    //get array of markers currently in cluster
+    var allMarkers = marker_list;
+    //final position for marker, could be updated if another marker already exists in same position
+    var finalLatLng = myLatlng;
+    //check to see if any of the existing markers match the latlng of the new marker
+    if (allMarkers.length != 0) {
+        for (i=0; i < allMarkers.length; i++) {
+            var existingMarker = allMarkers[i];
+            var pos = existingMarker.getPosition();
+            //if a marker already exists in the same position as this marker
+            if (myLatlng.equals(pos)) {
+                //update the position of the coincident marker by applying a small multipler to its coordinates
+                var newLat = myLatlng.lat() + (Math.random() -.5) / 1500;// * (Math.random() * (max - min) + min);
+                var newLng = myLatlng.lng() + (Math.random() -.5) / 1500;// * (Math.random() * (max - min) + min);
+                finalLatLng = new google.maps.LatLng(newLat,newLng);
+            }
+        }
+    }
     
 
     marker = new google.maps.Marker({
-        position: myLatlng,
+        position: finalLatLng,
         map: map,
         icon: icons[emotion].image
     });
-
+    
+    marker_list.push(marker);
+    
 	var infocontent = '<div class="iw-container">'+
         '<p style="margin-top:8px">' + contentString.replace("\n", "<br/>") + '</p>'+
-        '<p style="margin-top:20px;text-align:right;" id="correct-btn"><a href=\'javascript:show_correct()\'">情緒怪怪的？</a></p>'+
+        '<p style="margin-top:20px;text-align:right;" id="correct-btn"><a href=\'javascript:show_correct()\'">情緒怪怪的？協助我們改善吧！</a></p>'+
         '<div id="correct-option" style="display:none;text-align:right;color: #ff6666;">'+
         '<p style="margin-top:20px">這應該是' +
-        '<a href=\'javascript:tag(\"' + contentString + '\",\"laughing\")\'><img width="15px" height="15px" src="./img/laughing.png"/></a>'+
-        '<a href=\'javascript:tag(\"' + contentString + '\",\"surprised\")\'><img width="15px" height="15px" src="./img/surprised.png"/></a>'+
-        '<a href=\'javascript:tag(\"' + contentString + '\",\"heart\")\'><img width="15px" height="15px" src="./img/heart.png"/></a>'+
-        '<a href=\'javascript:tag(\"' + contentString + '\",\"unhappy\")\'><img width="15px" height="15px" src="./img/unhappy.png"/></a>'+
-        '<a href=\'javascript:tag(\"' + contentString + '\",\"angry\")\'><img width="15px" height="15px" src="./img/angry.png"/></a>才對！</p>'+
+        '<a href=\'javascript:tag(\"' + contentString + '\",\"laughing\")\'><img width="18px" height="18px" src="./img/laughing.png"/></a>'+
+        '<a href=\'javascript:tag(\"' + contentString + '\",\"surprised\")\'><img width="18px" height="18px" src="./img/surprised.png"/></a>'+
+        '<a href=\'javascript:tag(\"' + contentString + '\",\"heart\")\'><img width="18px" height="18px" src="./img/heart.png"/></a>'+
+        '<a href=\'javascript:tag(\"' + contentString + '\",\"unhappy\")\'><img width="18px" height="18px" src="./img/unhappy.png"/></a>'+
+        '<a href=\'javascript:tag(\"' + contentString + '\",\"angry\")\'><img width="18px" height="18px" src="./img/angry.png"/></a>才對！</p>'+
         '</div>'+
     '</div>';
 
